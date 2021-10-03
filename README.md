@@ -1,12 +1,12 @@
-# Philophos
+# Amanager
 
-Philophos est un bot permettant de vous divertir sur Discord.
+Amanager est un bot permettant de vous divertir sur Discord.
 
 ___
 
 ## Informations pratiques
 
-[Inviter Philophos](https://iso-land.org/philophos) <br>
-[Documentation](https://philophosdocs.iso-land.org) <br>
+[Inviter Amanager](https://iso-land.org/amanager/invite) <br>
+[Documentation](https://iso-land.org/amanager/docs) <br>
 Rejoindre le [serveur discord](https://iso-land.org/discord) <br>
 Projet fondé par [ISO land](https://iso-land.org)
