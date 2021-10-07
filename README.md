@@ -1,6 +1,6 @@
 # Amanager
 
-Amanager est un bot permettant de vous divertir sur Discord.
+Amanager est un bot très utile permettant de vous divertir sur Discord.
 
 ___
 
