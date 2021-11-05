@@ -11,12 +11,13 @@ class Slash(commands.Cog):
     @cog_ext.cog_slash(name="clear", description="Supprimer un certain nombre de messages rapidement.", options=[
                 create_option(
                 name="nombre_de_messages",
-                description="Nombre de messages à supprimer (les messages datant de plus de 15 jours seront ignorés)",
+                description="Nombre de messages à supprimer",
                 option_type=4,
                 required=True
                 )])
     async def _clear(self, ctx, nombre_de_messages: int):
         if ctx.author.guild_permissions.ban_members:
+            await ctx.defer()
             await ctx.channel.purge(limit=nombre_de_messages)
             msg = await ctx.send(":white_check_mark:")
             await asyncio.sleep(1)

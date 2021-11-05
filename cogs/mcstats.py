@@ -1,16 +1,16 @@
 import discord
 from discord.ext import commands
-from discord_slash import cog_ext, SlashContext
+from discord_slash import cog_ext
 from discord_slash.utils.manage_commands import create_option
 
 class Slash(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @cog_ext.cog_slash(name="mcstats", description="Afficher le bandeau d'un serveur Minecraft !", options=[
+    @cog_ext.cog_slash(name="mcstats", description="Afficher les statistiques d'un serveur minecraft", options=[
                 create_option(
                 name="ip",
-                description="IP du serveur Minecraft",
+                description="IP",
                 option_type=3,
                 required=True
                 )])

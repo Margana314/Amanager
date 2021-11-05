@@ -1,4 +1,4 @@
-import discord
+import discord, sqlite3
 from discord.ext import commands
 
 class Slash(commands.Cog):

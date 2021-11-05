@@ -8,7 +8,7 @@ class Slash(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message):
-        APOD_channels = [771486705088856094, 611230647343644682] #apod-every-day (iso land) & apod (project garmana)
+        APOD_channels = [611230647343644682] # apod (project garmana)
         if message and message.channel.id in APOD_channels:
             default_emojis = ["👌", "😍", "🤩"]
             async def react_apod(message):

@@ -1,6 +1,6 @@
 import discord, requests
 from discord.ext import commands
-from discord_slash import cog_ext, SlashContext
+from discord_slash import cog_ext
 
 class Slash(commands.Cog):
     def __init__(self, bot):
@@ -10,7 +10,7 @@ class Slash(commands.Cog):
     async def _dog(self, ctx):
         await ctx.defer()
         animal_images = requests.get("https://random.dog/woof.json").json()
-        embed = discord.Embed(title="Un chien sauvage apparaît !", description="Woof !")
+        embed = discord.Embed(title="Un chien sauvage apparaît !", description="Ouaf !")
         embed.set_image(url=animal_images['url'])
         await ctx.send(embed=embed)
 

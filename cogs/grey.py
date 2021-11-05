@@ -1,16 +1,16 @@
-import discord, requests
+import discord
 from discord.ext import commands
-from discord_slash import cog_ext, SlashContext
+from discord_slash import cog_ext
 from discord_slash.utils.manage_commands import create_option
 
 class Slash(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @cog_ext.cog_slash(name="grey", description="Afficher ta photo de profil, ou celle d'un utilisateur avec un filtre gris !", options=[
+    @cog_ext.cog_slash(name="grey", description="Afficher une photo de profil avec un filtre gris", options=[
                 create_option(
                 name="membre",
-                description="Choisis un utilisateur",
+                description="membre discord",
                 option_type=6,
                 required=False
                 )])

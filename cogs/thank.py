@@ -1,6 +1,6 @@
 import discord, TenGiphPy, json
 from discord.ext import commands
-from discord_slash import cog_ext, SlashContext
+from discord_slash import cog_ext
 from discord_slash.utils.manage_commands import create_option
 
 class Slash(commands.Cog):
@@ -15,6 +15,7 @@ class Slash(commands.Cog):
                 required=False
                 )])
     async def _thank(self, ctx, membre: discord.Member = None):
+        await ctx.defer()
         a_file = open("no-move.json", "r")
         json_object_nm = json.load(a_file)
         a_file.close()

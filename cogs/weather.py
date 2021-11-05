@@ -1,6 +1,6 @@
-import discord, requests, sqlite3, json
+import discord, requests, json
 from discord.ext import commands
-from discord_slash import cog_ext, SlashContext
+from discord_slash import cog_ext
 from discord_slash.utils.manage_commands import create_option
 
 class Slash(commands.Cog):
@@ -19,12 +19,10 @@ class Slash(commands.Cog):
         json_object_nm = json.load(a_file)
         a_file.close()
         openweathermap_api_key = json_object_nm['token']['openweathermap']
-        espace = " "
-        weather_city_name = ville
-        response = requests.get(f"http://api.openweathermap.org/data/2.5/weather?appid={openweathermap_api_key}&q={weather_city_name}").json()
-        if weather_city_name.lower() == "antarctique" or weather_city_name.lower() == "antarctica":
-            await ctx.send("Cet endroit a été mise sur liste noire pour cause de ralentissement. Merci !")
-        elif weather_city_name.lower() == "soleil":
+        response = requests.get(f"http://api.openweathermap.org/data/2.5/weather?appid={openweathermap_api_key}&q={ville}").json()
+        if ville.lower() == "antarctique" or ville.lower() == "antarctica":
+            await ctx.send("Cet endroit a été mis sur liste noire pour cause de ralentissement. Merci !")
+        elif ville.lower() == "soleil":
             embed = discord.Embed(title=f"Météo sur le Soleil", color=0xFFD700)
             embed.add_field(name="Desc.", value="Il fait chaud.", inline=True)
             embed.add_field(name="Localisation", value="<a:sun:790561041532190771> Au centre du système solaire.", inline=True)
@@ -36,21 +34,6 @@ class Slash(commands.Cog):
             embed.add_field(name="Vitesse du vent", value="217km/s", inline=True)
             embed.set_thumbnail(url="http://openweathermap.org/img/wn/01d@2x.png")
             await ctx.send(embed=embed)
-            connection = sqlite3.connect("iso_card.db")
-            cursor = connection.cursor()
-            member_id = (f"{ctx.author.id}",)
-            cursor.execute('SELECT * FROM tt_iso_card WHERE user_id = ?', member_id)
-            achievement = "<a:sun:790561041532190771>"
-            member_values = cursor.fetchone()
-            cursor.execute('SELECT * FROM achievements WHERE user_id = ?', member_id)
-            a_user = cursor.fetchone()
-            a_misc = a_user[1]
-            if member_values != None and achievement not in a_misc:
-                archi_list = str(a_misc) + f" {achievement}"
-                updated_user = (f"{archi_list}", f"{ctx.author.id}",)
-                cursor.execute('UPDATE achievements SET a_misc = ? WHERE user_id = ?', updated_user)
-                connection.commit()
-            connection.close()
         else:
             if response["cod"] != "404":
                 weather_description = response['weather'][0]['description']
@@ -65,7 +48,7 @@ class Slash(commands.Cog):
                 elif weather_description == "mist": weather_description, w_color = "brumeux", 0xadaeb4
                 elif weather_description == "moderate rain": weather_description, w_color = "pluie modérée", 0xdde2e4
 
-                embed = discord.Embed(title=f"Météo à {weather_city_name}", description=f"https://openweathermap.org/city/{str(response['id'])}", color=w_color)
+                embed = discord.Embed(title=f"Météo à {ville}", description=f"https://openweathermap.org/city/{str(response['id'])}", color=w_color)
                 embed.add_field(name="Desc.", value=f"{weather_description}", inline=True)
                 embed.add_field(name="Localisation", value=f":flag_{response['sys']['country'].lower()}: {response['sys']['country']}", inline=True)
                 embed.add_field(name="Temp. moyenne", value=f"{str(round(response['main']['temp'] - 273.15))}°C", inline=True)

@@ -7,10 +7,10 @@ class Slash(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @cog_ext.cog_slash(name="changelog", description="Voir la liste des versions du bot !", options=[
+    @cog_ext.cog_slash(name="changelog", description="Afficher la liste des versions du bot !", options=[
                 create_option(
                 name="version",
-                description="Version du bot, tu peux voir la liste des versions avec /changelog",
+                description="Versions du bot visibles avec /changelog",
                 option_type=3,
                 required=False
                 )])
@@ -24,11 +24,11 @@ class Slash(commands.Cog):
         if version == None:
             changelog_versions = espace.join(list(changelog_versions))
             embed = discord.Embed(title="Liste des versions de changelogs")
-            embed.add_field(name="** **", value=changelog_versions, inline=False)
+            embed.add_field(name="** **", value=changelog_versions, inline=True)
             await ctx.send(embed=embed)
         else:
             if version.lower() not in changelog_versions:
-                await ctx.send(f"La version que tu as entré n'est pas valide. Pour voir la liste des versions : **{self.client.command_prefix}changelog**.")
+                await ctx.send(f"La version que tu as entré n'est pas valide. Pour voir la liste des versions : **/changelog**.")
             else:
                 cg = changelog_versions[f"{version.lower()}"]
                 embed = discord.Embed(title=f"Changelog • {version.lower()}", description=cg['date'], color=0x666666)

@@ -1,4 +1,4 @@
-import discord, sqlite3, random, asyncio, json
+import discord, sqlite3, random, asyncio
 from discord.ext import commands
 
 class Slash(commands.Cog):

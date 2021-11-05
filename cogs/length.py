@@ -1,6 +1,6 @@
 import discord, json
 from discord.ext import commands
-from discord_slash import cog_ext, SlashContext
+from discord_slash import cog_ext
 from discord_slash.utils.manage_commands import create_option
 
 class Slash(commands.Cog):
@@ -10,7 +10,7 @@ class Slash(commands.Cog):
     @cog_ext.cog_slash(name="length", description="Compteur de caractères", options=[
                 create_option(
                 name="message",
-                description="Message avec lequel faire compter le nombre de caractères",
+                description="Message",
                 option_type=3,
                 required=True
                 )])

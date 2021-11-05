@@ -1,6 +1,6 @@
 import discord, TenGiphPy, json
 from discord.ext import commands
-from discord_slash import cog_ext, SlashContext
+from discord_slash import cog_ext
 from discord_slash.utils.manage_commands import create_option
 
 class Slash(commands.Cog):
@@ -10,11 +10,12 @@ class Slash(commands.Cog):
     @cog_ext.cog_slash(name="cookie", description="Donner un cookie à un membre !", options=[
                 create_option(
                 name="membre",
-                description="Membre de discord avec qui donner un cookie.",
+                description="Membre de discord",
                 option_type=6,
                 required=False
                 )])
     async def _cookie(self, ctx, membre: discord.Member = None):
+        await ctx.defer()
         a_file = open("no-move.json", "r")
         json_object_nm = json.load(a_file)
         a_file.close()

@@ -1,6 +1,6 @@
 import discord, asyncio, random, string
 from discord.ext import commands
-from discord_slash import cog_ext, SlashContext
+from discord_slash import cog_ext
 from discord_slash.utils.manage_commands import create_option, create_choice
 
 class Slash(commands.Cog):

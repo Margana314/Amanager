@@ -7,7 +7,7 @@ class Slash(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @cog_ext.cog_slash(name="color", description="Afficher une couleur par rapport à son code héxadécimal !", options=[
+    @cog_ext.cog_slash(name="color", description="Afficher la couleur d'un code héxadécimal", options=[
                 create_option(
                 name="hexa",
                 description="code héxadécimal",
@@ -16,7 +16,7 @@ class Slash(commands.Cog):
                 )])
     async def _color(self, ctx, hexa: str):
         hexa = hexa.replace("#",'').upper()
-        embed = discord.Embed(title=f"Sélecteur de couleurs", description=f"Couleur recherchée : **#{hexa}**")
+        embed = discord.Embed(title=f"Couleur recherchée : **#{hexa}**")
         embed.set_image(url=f"https://www.colorhexa.com/{hexa}.png")
         await ctx.send(embed=embed)
 

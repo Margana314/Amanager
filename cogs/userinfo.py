@@ -1,13 +1,13 @@
 import discord
 from discord.ext import commands
-from discord_slash import cog_ext, SlashContext
+from discord_slash import cog_ext
 from discord_slash.utils.manage_commands import create_option
 
 class Slash(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @cog_ext.cog_slash(name="userinfo", description="Afficher les informations à propos de ton profil, ou d'un utilisateur !", options=[
+    @cog_ext.cog_slash(name="userinfo", description="Afficher les informations à propos de ton profil, ou d'un utilisateur !...", options=[
                 create_option(
                 name="membre",
                 description="Membre de discord",
@@ -29,7 +29,8 @@ class Slash(commands.Cog):
         embed.set_footer(text=f"ID : {membre.id}")
         embed.add_field(name="A rejoint le serveur", value=membre.joined_at.strftime("%d/%m/%Y • %H:%M:%S"), inline=True)
         embed.add_field(name="Inscription sur Discord", value=membre.created_at.strftime("%d/%m/%Y • %H:%M:%S"), inline=True)
-        embed.add_field(name="Liste des rôles", value=espace.join(roles_list), inline=True)
+        if roles_list != None:
+            embed.add_field(name="Liste des rôles", value=espace.join(roles_list), inline=True)
         if membre.premium_since != None:
             embed.add_field(name="Abonné à Nitro depuis", value=membre.premium_since.strftime("%d/%m/%Y • %H:%M:%S"), inline=True)
         await ctx.send(embed=embed)

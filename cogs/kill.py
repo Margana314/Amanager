@@ -10,11 +10,12 @@ class Slash(commands.Cog):
     @cog_ext.cog_slash(name="kill", description="Vouloir tuer quelqu'un", options=[
                 create_option(
                 name="membre",
-                description="Membre de discord que vous voulez tenter de tuer",
+                description="Membre de discord (discord member)",
                 option_type=6,
                 required=False
                 )])
     async def _kill(self, ctx, membre: discord.Member = None):
+        await ctx.defer()
         a_file = open("no-move.json", "r")
         json_object_nm = json.load(a_file)
         a_file.close()
@@ -23,7 +24,7 @@ class Slash(commands.Cog):
         rgif = TenGiphPy.Tenor(token=tengiphpy_api_key)
         dance_gif = rgif.random("kill anime")
         if membre == None:
-            embed.add_field(name=f"{ctx.author.name} a faillit être tué(e) !", value=f'{ctx.author.mention}', inline=False)
+            embed.add_field(name=f"{ctx.author.name} a faillit être tué.e !", value=f'{ctx.author.mention}', inline=False)
             embed.set_image(url=dance_gif)
             await ctx.send(embed=embed)
         else:

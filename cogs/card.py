@@ -1,13 +1,14 @@
-import discord, sqlite3, json
+import discord, sqlite3, asyncio
 from discord.ext import commands
-from discord_slash import cog_ext, SlashContext
+from discord_slash import cog_ext, ButtonStyle
 from discord_slash.utils.manage_commands import create_option
+from discord_slash.utils.manage_components import *
 
 class Slash(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @cog_ext.cog_slash(name="card", description="Voir ta carte, ou celle d'un utilisateur.", options=[
+    @cog_ext.cog_slash(guild_ids=[736689848626446396], name="card", description="Afficher ta carte", options=[
                 create_option(
                 name="membre",
                 description="Membre de discord",
@@ -22,34 +23,54 @@ class Slash(commands.Cog):
         if membre.bot == True:
             await ctx.send(f"{ctx.author.mention} Les bots n'ont pas de carte... :wink:")
         if membre.bot == False:
-            a_file = open("no-move.json", "r")
-            json_object_nm = json.load(a_file)
-            a_file.close()
             member_id = (f"{membre.id}",)
             cursor.execute('SELECT * FROM tt_iso_card WHERE user_id = ?', member_id)
             member_values = cursor.fetchone()
             if member_values == None:
                 if membre == ctx.author:
-                    await ctx.send(f"Tu ne peux pas afficher ta carte car tu n'as pas commencé l'aventure ISO land ! (Pour débuter, fait : **{self.client.command_prefix}start**)")
+                    await ctx.send("Tu ne peux pas afficher ta carte car tu n'as pas commencé l'aventure ISO land ! (Pour débuter, fait : **/start**)")
                 else:
-                    await ctx.send(f"Tu ne peux pas afficher la carte de cette personne car elle ne s'est pas inscrite à l'aventure ISO land... (Elle peut débuter en faisant **{self.client.command_prefix}start**)")
+                    await ctx.send("Tu ne peux pas afficher la carte de cette personne car elle ne s'est pas inscrite à l'aventure ISO land...")
             else:
-                rep_points = member_values[1] #member_values[0] = user_id
-                archi_list = member_values[2]
-                about_para = member_values[3]
-                afk_status = member_values[4]
-                daily = member_values[5]
-
-                if about_para == "":
-                    about_para = "Je suis un nouveau dans l'aventure d'ISO land !"
-                embed = discord.Embed(title=f"aCard de {membre.name}", description=membre.mention, color=0xf9c62d)
+                about_para = member_values[1]
+                embed = discord.Embed(title=f"Carte de {membre.name}", description=membre.mention)
                 embed.add_field(name="À propos", value=about_para, inline=False)
-                if afk_status != "Nonei":
-                    embed.add_field(name="Statut AFK", value=afk_status, inline=False)
-                embed.add_field(name="<:0_reputation_point:822158196068188161> Point(s) de réputation", value=rep_points, inline=True)
-                embed.add_field(name="<:aCoin:822427301488623620> Crédits", value=daily, inline=True)
-                embed.set_footer(text="➡️  Pour voir tes succès, fait /achievement !")
-                await ctx.send(embed=embed)
+                if membre != ctx.author:
+                    await ctx.send(embed=embed)
+                else:
+                    buttons = [
+                        create_button(
+                        style = ButtonStyle.blue,
+                        label = "Éditer À propos",
+                        custom_id = "edit_apropos"
+                        )
+                    ]
+
+                    action_row = create_actionrow(*buttons)
+                    choice_made = await ctx.send(embed=embed, components=[action_row])
+
+                    def check(m):
+                        return m.author_id == ctx.author_id and m.origin_message.id == choice_made.id
+                    def check2(msg):
+                        return msg.author == ctx.author and msg.channel == ctx.channel
+
+                    button_ctx = await wait_for_component(self.bot, components=action_row, check=check)
+                    if button_ctx.custom_id == "edit_apropos":
+                        await button_ctx.send(content="**Tu as 30 secondes pour envoyer le nouveau message de la section __à propos__.**", hidden=True)
+                        try:
+                            msg = await self.bot.wait_for("message", check=check2, timeout=30)
+                        except asyncio.TimeoutError:
+                            await button_ctx.send(content=f"{ctx.author.mention}, Le temps est écoulé. Réentre la commande pour éditer la section **à propos**.", hidden=True)
+
+                        if len(list(msg.content)) >= 1024:
+                            await button_ctx.send(content=f"{ctx.author.mention}, le message envoyé est trop long pour votre section **à propos**, la limite étant de 1024 caractères.", hidden=True)
+                        else:
+                            updated_user = (f"{msg.content}", f"{ctx.author.id}",)
+                            cursor.execute('UPDATE tt_iso_card SET about = ? WHERE user_id = ?', updated_user)
+                            connection.commit()
+
+                            await msg.delete()
+                            await button_ctx.send(content=f"{ctx.author.mention}, édition confirmée de la section **à propos** :\n\n> {msg.content}", hidden=True)
 
 def setup(bot):
     bot.add_cog(Slash(bot))

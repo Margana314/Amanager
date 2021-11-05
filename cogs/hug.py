@@ -1,20 +1,21 @@
 import discord, TenGiphPy, json
 from discord.ext import commands
-from discord_slash import cog_ext, SlashContext
+from discord_slash import cog_ext
 from discord_slash.utils.manage_commands import create_option
 
 class Slash(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     
-    @cog_ext.cog_slash(name="hug", description="Faire un câlin à quelqu'un !", options=[
+    @cog_ext.cog_slash(name="hug", description="Faire un câlin à quelqu'un ! (hug someone)", options=[
                 create_option(
                 name="membre",
-                description="Membre de discord à qui faire un câlin",
+                description="Membre de discord (discord member)",
                 option_type=6,
                 required=False
                 )])
     async def _hug(self, ctx, membre: discord.Member = None):
+        await ctx.defer()
         a_file = open("no-move.json", "r")
         json_object_nm = json.load(a_file)
         a_file.close()

@@ -1,16 +1,16 @@
 import discord, TenGiphPy, json
 from discord.ext import commands
-from discord_slash import cog_ext, SlashContext
+from discord_slash import cog_ext
 from discord_slash.utils.manage_commands import create_option
 
 class Slash(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @cog_ext.cog_slash(name="gif", description="Afficher un gif en fonction ds mot(s)-clef(s) entré(s)", options=[
+    @cog_ext.cog_slash(name="gif", description="Afficher un gif", options=[
                 create_option(
                 name="requête",
-                description="mot(s)-clef(s) à rechercher sur tenor !",
+                description="mots-clefs",
                 option_type=3,
                 required=True
                 )])
@@ -24,7 +24,7 @@ class Slash(commands.Cog):
         embed = discord.Embed()
         embed.add_field(name=f"GIF de **{requête}** demandé par {ctx.author.name} !", value=ctx.author.mention, inline=False)
         embed.set_image(url=msg)
-        embed.set_footer(text=f"Service utilisé : Tenor")
+        embed.set_footer(text=f"Tenor")
         await ctx.send(embed=embed)
 
 def setup(bot):
