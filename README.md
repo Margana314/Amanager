@@ -6,7 +6,7 @@ ___
 
 ## Informations pratiques
 
-[Inviter Amanager](https://iso-land.org/amanager/invite) <br>
+[Inviter Amanager](https://iso-land.org/amanager) <br>
 [Documentation](https://github.com/Margana314/Amanager/wiki) <br>
 Rejoindre le [serveur discord](https://iso-land.org/discord) <br>
 Projet fondé par [ISO land](https://iso-land.org)
