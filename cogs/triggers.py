@@ -47,7 +47,7 @@ class Others(commands.Cog):
                     mention_time = "Bonnes vacances d'été ! " + str(mention_time)
 
                 embed = discord.Embed(title=mention_time, description=f"Mon préfixe est **/** | **/help** pour plus d'infos !", color=0xf5900b)
-                embed.add_field(name="** **", value="Tu rencontres des bugs, tu as besoin d'aide, tu veux contribuer ou juste discuter ? Tu peux rejoindre le [serveur support](https://iso-land.org/discord) du bot !", inline=False)
+                embed.add_field(name="** **", value="Tu rencontres des bugs, tu as besoin d'aide, tu veux contribuer ou juste discuter ? Tu peux rejoindre le [serveur support](https://isoland.xyz/discord) du bot !", inline=False)
                 await message.channel.send(embed=embed)
 
 def setup(client):

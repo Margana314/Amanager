@@ -8,7 +8,7 @@ class Slash(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @cog_ext.cog_slash(guild_ids=[736689848626446396], name="card", description="Afficher ta carte", options=[
+    @cog_ext.cog_slash(name="card", description="Afficher ta carte", options=[
                 create_option(
                 name="membre",
                 description="Membre de discord",

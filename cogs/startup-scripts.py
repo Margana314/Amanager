@@ -1,3 +1,4 @@
+from cmath import nan
 import discord, asyncio, random, json, humanize, sqlite3
 from discord.ext import commands, tasks
 from datetime import datetime, timedelta
@@ -20,13 +21,17 @@ class Slash(commands.Cog):
             connection = sqlite3.connect("levels.db")
             cursor = connection.cursor()
             for guild in self.bot.guilds:
-                cursor.execute(f'SELECT * FROM _{guild.id}')
-                test = cursor.fetchall()
-                for user in test:
-                    if user[4] == 'yes':
-                        updated_user = ('no', user[0],)
-                        cursor.execute(f'UPDATE _{guild.id} SET cooldown = ? WHERE user_id = ?', updated_user)
-                        connection.commit()
+                try:
+                    cursor.execute(f'SELECT * FROM _{guild.id}')
+                    test = cursor.fetchall()
+                except:
+                    pass
+                if (test):
+                    for user in test:
+                        if user[4] == 'yes':
+                            updated_user = ('no', user[0],)
+                            cursor.execute(f'UPDATE _{guild.id} SET cooldown = ? WHERE user_id = ?', updated_user)
+                            connection.commit()
             connection.close()
 
         global uptime_start
@@ -73,7 +78,7 @@ class Slash(commands.Cog):
             create_button(
                 style = ButtonStyle.URL,
                 label = "Inviter le bot",
-                url = "https://iso-land.org/amanager/invite"
+                url = "https://isoland.xyz/amanager"
             ),
             create_button(
                 style = ButtonStyle.URL,

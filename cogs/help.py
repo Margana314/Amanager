@@ -16,7 +16,7 @@ class Slash(commands.Cog):
             create_button(
             style = ButtonStyle.URL,
             label = "Liste des commandes",
-            url = "https://iso-land.org/amanager/docs"
+            url = "https://github.com/Margana314/Amanager/wiki"
             )
         ]
 

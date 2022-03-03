@@ -57,7 +57,7 @@ class Slash(commands.Cog):
                 embed.add_field(name="Humidité", value=f"{response['main']['humidity']}%", inline=True)
                 embed.add_field(name="Pression atmosphérique", value=f"{response['main']['pressure']}hPa", inline=True)
                 embed.add_field(name="Vitesse du vent", value=f"{response['wind']['speed']}m/s", inline=True)
-                embed.set_thumbnail(url=f"http://openweathermap.org/img/wn/{response['weather'][0]['icon']}@2x.png")
+                embed.set_thumbnail(url=f"https://openweathermap.org/img/wn/{response['weather'][0]['icon']}@2x.png")
                 await ctx.send(embed=embed)
             else:
                 await ctx.send("Ville non trouvée.")
