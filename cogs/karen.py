@@ -13,9 +13,9 @@ class Slash(commands.Cog):
             jokes_karen = ['I want to speak to the manager !', 'I want to speak with the manager !', 'Take the kids out.', 'I have a complaint, i want to speak to the manager', f'{ctx.author.mention} entre en mode Karen !']
             await ctx.send(random.choice(jokes_karen))
         elif random_karen == 2: # meme (image)
-            memes_karen = ["https://is.gd/NShcnL", "https://is.gd/hY2B4H", "https://is.gd/KG4vtc",
-            "https://is.gd/tBvPsH", "https://is.gd/SG4WmK", "https://is.gd/xzGV2u",
-            "https://is.gd/8yJPKU", "https://is.gd/H2gMSh", "https://is.gd/EZjDM7"]
+            memes_karen = ["https://urlz.fr/hMYG", "https://urlz.fr/hMYH", "https://urlz.fr/hMYI",
+            "https://urlz.fr/hMYJ", "https://urlz.fr/hMYK", "https://urlz.fr/hMYL",
+            "https://urlz.fr/hMYM", "https://urlz.fr/hMYN", "https://urlz.fr/hMYO", "https://urlz.fr/hMYC"]
             await ctx.send(random.choice(memes_karen))
         elif random_karen == 3: # gif
             a_file = open("no-move.json", "r")
